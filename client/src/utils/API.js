@@ -1,17 +1,19 @@
 import axios from "axios";
 const BASEURL = "https://www.googleapis.com/books/v1/volumes?q=";
-const APIKEY = "&key=AIzaSyC0_m1dtSVXnYin_RNzwmfRo7AZvN2XfgU";
+const APIKEY = "&key=AIzaSyBWsA8RHU9y0eT8MZC26TEo0XetYl3u4ok";
 
 export default {
   viewBooks: function(searchTerm) {
     return new Promise((resolve, reject) => {
-      axios.get(BASEURL + searchTerm + APIKEY)
+      axios
+        .get(BASEURL + searchTerm + APIKEY)
         .then(res => {
+          console.log(res)
           const apiBooks = res.data.items;
           const bookInfo = apiBooks.map(book => {
-            const { bookImage = null } = book.volumeInfo
+            const { imageLinks = null } = book.volumeInfo
 
-            const thumbnail = bookImage ? bookImage.thumbnail : null
+            const thumbnail = imageLinks ? imageLinks.thumbnail : null
             return {
               id: book.id,
               title: book.volumeInfo.title,
@@ -22,8 +24,9 @@ export default {
             };
           });
           resolve(bookInfo);
+          console.log(bookInfo);
         })
-        .catch(err => console.log(err));
+        .catch(err => reject(err));
     });
   },
   

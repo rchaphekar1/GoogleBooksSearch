@@ -5,7 +5,7 @@ import "./style.css";
 // That way we don't have to define them all individually
 function LinkBtn(props) {
   return (
-    <span className="link-btn" {...props} role="button" tabIndex="0">
+    <span className="link-btn" {...props} href={props.link} target="_blank" role="button" tabIndex="0">
       Link
     </span>
   );

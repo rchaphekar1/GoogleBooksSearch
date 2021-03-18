@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SaveBtn from "../components/SaveBtn";
 import LinkBtn from "../components/LinkBtn";
 import Jumbotron from "../components/Jumbotron";
@@ -16,7 +16,7 @@ function Search() {
   function loadBooks() {
     API.viewBooks(userSearch)
       .then(res => 
-        setBooks(res)
+        setBooks(res),
       )
       .catch(err => console.log(err));
   };
@@ -24,7 +24,7 @@ function Search() {
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
     const { value } = event.target;
-    setUserSearch(value.replace(/\s/g, ''))
+    setUserSearch(value.replace(/\s/g, '+'))
   };
 
   function handleSearchBtn(event) {
@@ -37,8 +37,8 @@ function Search() {
   // When the form is submitted, use the API.saveBook method to save the book data
   // Then reload books from the database
   function handleSaveBtn(bookInfo) {
-    API.getBooks({
-      _id: bookInfo.id,
+    API.saveBook({
+      id: bookInfo.id,
       title: bookInfo.title,
       authors: bookInfo.authors,
       description: bookInfo.description,
@@ -78,7 +78,7 @@ function Search() {
                     <div>
                       <SaveBtn
                           handleSaveBtn={handleSaveBtn}
-                          bookData={book}
+                          bookInfo={book}
                         >
                       </SaveBtn>
                       <LinkBtn

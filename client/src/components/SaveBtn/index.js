@@ -5,8 +5,8 @@ import "./style.css";
 // That way we don't have to define them all individually
 function SaveBtn(props) {
   return (
-    <span className="save-btn" {...props} role="button" tabIndex="0">
-      Save
+    <span className="save-btn" onClick={() => props.handleSaveBtn(props.bookInfo)} role="button" tabIndex="0" style={{paddingLeft: "10px"}}>
+      Save {props.children}
     </span>
   );
 }

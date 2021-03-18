@@ -1,6 +1,32 @@
 import axios from "axios";
+const BASEURL = "https://www.googleapis.com/books/v1/volumes?q=";
+const APIKEY = "&key=AIzaSyC0_m1dtSVXnYin_RNzwmfRo7AZvN2XfgU";
 
 export default {
+  viewBooks: function(searchTerm) {
+    return new Promise((resolve, reject) => {
+      axios.get(BASEURL + searchTerm + APIKEY)
+        .then(res => {
+          const apiBooks = res.data.items;
+          const bookInfo = apiBooks.map(book => {
+            const { bookImage = null } = book.volumeInfo
+
+            const thumbnail = bookImage ? bookImage.thumbnail : null
+            return {
+              id: book.id,
+              title: book.volumeInfo.title,
+              authors: book.volumeInfo.authors,
+              description: book.volumeInfo.description,
+              thumbnail: thumbnail,
+              link: book.volumeInfo.previewLink
+            };
+          });
+          resolve(bookInfo);
+        })
+        .catch(err => console.log(err));
+    });
+  },
+  
   // Gets all books
   getBooks: function() {
     return axios.get("/api/books");

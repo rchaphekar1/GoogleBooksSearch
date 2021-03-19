@@ -84,6 +84,7 @@ function Search() {
                           handleSaveBtn={handleSaveBtn}
                           bookInfo={book}
                         >
+                        Save
                       </SaveBtn>
                       <LinkBtn
                           link={book.link}

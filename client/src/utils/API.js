@@ -10,21 +10,20 @@ export default {
         .then(res => {
           console.log(res)
           const apiBooks = res.data.items;
-          const bookInfo = apiBooks.map(book => {
+          const bookData = apiBooks.map(book => {
             const { imageLinks = null } = book.volumeInfo
-
             const thumbnail = imageLinks ? imageLinks.thumbnail : null
             return {
               id: book.id,
               title: book.volumeInfo.title,
               authors: book.volumeInfo.authors,
               description: book.volumeInfo.description,
-              thumbnail: thumbnail,
+              image: thumbnail,
               link: book.volumeInfo.previewLink
             };
           });
-          resolve(bookInfo);
-          console.log(bookInfo);
+          console.log(bookData);
+          resolve(bookData);
         })
         .catch(err => reject(err));
     });

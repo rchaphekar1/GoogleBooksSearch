@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import SaveBtn from "../components/SaveBtn";
 import LinkBtn from "../components/LinkBtn";
 import Jumbotron from "../components/Jumbotron";
+import InnerContainer from "../components/InnerContainer/InnerContainer";
+import OuterContainer from "../components/OuterContainer/OuterContainer";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
@@ -15,10 +17,12 @@ function Search() {
   // Loads all books and sets them to books
   function loadBooks() {
     API.viewBooks(userSearch)
-      .then(res => 
-        setBooks(res),
+      .then(res => {
+        setBooks(res)
+        }
       )
       .catch(err => console.log(err));
+    console.log(books)
   };
 
   // Handles updating component state when the user types into the input field
@@ -75,7 +79,7 @@ function Search() {
               <List>
                 {books.map(book => (
                   <ListItem key={book.id}>
-                    <div>
+                    <OuterContainer>
                       <SaveBtn
                           handleSaveBtn={handleSaveBtn}
                           bookInfo={book}
@@ -84,14 +88,14 @@ function Search() {
                       <LinkBtn
                           link={book.link}
                       />
-                      <div
+                      <InnerContainer
                         key={book.id}
                         title={book.title}
                         authors={book.authors}
                         image={book.image}
                         description={book.description}
                       />
-                    </div>
+                    </OuterContainer>
                   </ListItem>
                 ))}
               </List>
